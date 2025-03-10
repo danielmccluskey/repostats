@@ -12,8 +12,8 @@ namespace REPOStats_Mod;
 public static class DanosRepoStatsPluginInfo
 {
     public const string PLUGIN_GUID = "com.danos.repostats";
-    public const string PLUGIN_NAME = "REPOStats-Mod";
-    public const string PLUGIN_VERSION = "1.0.0";
+    public const string PLUGIN_NAME = "repostats";
+    public const string PLUGIN_VERSION = "0.5.1";
 }
 [BepInPlugin(DanosRepoStatsPluginInfo.PLUGIN_GUID, DanosRepoStatsPluginInfo.PLUGIN_NAME, DanosRepoStatsPluginInfo.PLUGIN_VERSION)]
 public class REPOStats_Mod : BaseUnityPlugin

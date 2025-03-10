@@ -82,6 +82,11 @@ namespace REPOStats_Mod.Patches
 
         public static void CombinedLevelLogic(string _levelName, int _levelsCompleted, bool _gameOver)
         {
+            if(DanosStaticStore.statsStore != null)
+            {
+                DanosStaticStore.statsStore.RunStats.completed_levels = _levelsCompleted;
+            }
+
 
             if (RunManager.instance == null)
             {
@@ -129,6 +134,8 @@ namespace REPOStats_Mod.Patches
 
 
             }
+
+
         }
 
         public static void RoundEnded(string a_reason)

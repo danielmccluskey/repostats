@@ -16,6 +16,8 @@ I plan to include the following stats and more:
 - Haul History
 - More!
 
+***Using this mod now helps me gather more data which is a huge help when developing the web side of the mod.***
+
 
 ## Requirements/Dependencies
 This mod requires the following mods to function.

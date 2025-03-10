@@ -26,19 +26,13 @@ namespace REPOStats_Mod.Patches
         public static void StartRoundLogicPostfix(RoundDirector __instance, int value)
         {
             DanosStaticStore.statsStore.RunStats.extractions_on_map = extractionPointsRef(__instance);
-
-            DanosStaticStore.statsStore.RunStats.extraction_goals_csv += value + ",";
-
-
-
-
-
-
-
-
-
         }
-
+        [HarmonyPatch(typeof(ExtractionPoint), "HaulGoalSetRPC")]
+        [HarmonyPostfix]
+        public static void StartRoundLogicPostfix(ExtractionPoint __instance, int value)
+        {
+            DanosStaticStore.statsStore.RunStats.extraction_goals_csv += value + ",";
+        }
 
     }
 }
