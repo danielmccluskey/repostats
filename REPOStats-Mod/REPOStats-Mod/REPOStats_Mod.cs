@@ -13,9 +13,11 @@ public static class DanosRepoStatsPluginInfo
 {
     public const string PLUGIN_GUID = "com.danos.repostats";
     public const string PLUGIN_NAME = "repostats";
-    public const string PLUGIN_VERSION = "0.5.2";
+    public const string PLUGIN_VERSION = "0.5.3";
 }
 [BepInPlugin(DanosRepoStatsPluginInfo.PLUGIN_GUID, DanosRepoStatsPluginInfo.PLUGIN_NAME, DanosRepoStatsPluginInfo.PLUGIN_VERSION)]
+[BepInDependency("nickklmao.menulib", BepInDependency.DependencyFlags.HardDependency)]
+
 public class REPOStats_Mod : BaseUnityPlugin
 {
     public static REPOStats_Mod Instance { get; private set; } = null!;
@@ -67,6 +69,8 @@ public class REPOStats_Mod : BaseUnityPlugin
         ApplyPatch(typeof(RunPatches));
         ApplyPatch(typeof(RoundDirectorPatches));
         ApplyPatch(typeof(DeathPatches));
+
+        DanosCustomMenuManager.Initialize();
 
         // Define patches dynamically
         var patchConfigs = DanosPatchManager.GetPatchConfigurations();
