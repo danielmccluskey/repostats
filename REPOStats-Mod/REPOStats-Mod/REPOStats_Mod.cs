@@ -13,7 +13,7 @@ public static class DanosRepoStatsPluginInfo
 {
     public const string PLUGIN_GUID = "com.danos.repostats";
     public const string PLUGIN_NAME = "repostats";
-    public const string PLUGIN_VERSION = "0.5.3";
+    public const string PLUGIN_VERSION = "0.5.4";
 }
 [BepInPlugin(DanosRepoStatsPluginInfo.PLUGIN_GUID, DanosRepoStatsPluginInfo.PLUGIN_NAME, DanosRepoStatsPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("nickklmao.menulib", BepInDependency.DependencyFlags.HardDependency)]

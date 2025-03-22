@@ -1,4 +1,5 @@
 ﻿using MenuLib;
+using MenuLib.MonoBehaviors;
 using System;
 using System.Buffers.Text;
 using System.Collections;
@@ -18,28 +19,38 @@ namespace REPOStats_Mod.Data
 
         public static void Initialize()
         {
-            MenuAPI.AddElementToEscapeMenu(new REPOButton("REPOStats Challenges", () => CreateChallengesPage().OpenPage(false)), new Vector2(356f, 86f));
+            MenuAPI.AddElementToEscapeMenu(parent =>
+            {
+            var statsbutton = MenuAPI.CreateREPOButton("REPOStats Challenges", () => CreateChallengesPage().OpenPage(false), parent, new Vector2(356f, 86f));
+
+        });
+                
+                
         }
 
-        private static REPOSimplePage CreateChallengesPage()
+        private static REPOPopupPage CreateChallengesPage()
         {
             challengesPage = null;
             challengeButtons.Clear();
 
+            challengesPage = MenuAPI.CreateREPOPopupPage("REPOStats Challenges", true, 0.0f);
 
-            challengesPage = new REPOPopupPage("REPOStats Challenges")
-                .SetBackgroundDimming(true)
-                .SetMaskPadding(new Padding(0, 0, 0, 0));
-
-            challengesPage.AddElementToPage(new REPOButton("Back", () => challengesPage.ClosePage(true)), new Vector2(77f, 34f));
-
-            // Add placeholder buttons before fetching
-            for (int i = 0; i < 5; i++) // Default to 5 placeholders
+            challengesPage.AddElement(parent =>
             {
-                var button = new REPOButton("Loading...", null);
-                challengesPage.AddElementToPage(button, new Vector2(100f, 250f - (i * 50f)));
-                challengeButtons.Add(button);
-            }
+                var backButton = MenuAPI.CreateREPOButton("Back", () => challengesPage.ClosePage(true), parent, new Vector2(77f, 34f));
+
+                // Add placeholder buttons before fetching
+                for (int i = 0; i < 5; i++) // Default to 5 placeholders
+                {
+                    var button = MenuAPI.CreateREPOButton("Loading...", null, parent, new Vector2(100f, 250f - (i * 50f)));
+                    challengeButtons.Add(button);
+                }
+
+
+            });
+
+
+
 
             // Start fetching challenges dynamically
             var fetcher = new GameObject("ChallengeFetcher").AddComponent<ChallengeFetcher>();
@@ -56,9 +67,13 @@ namespace REPOStats_Mod.Data
             // Ensure there are enough buttons or add more
             while (challengeButtons.Count < challenges.Count)
             {
-                var button = new REPOButton("Loading...", null);
-                challengesPage.AddElementToPage(button, new Vector2(250f, startY - (challengeButtons.Count * spacing)));
-                challengeButtons.Add(button);
+
+                challengesPage.AddElement(parent =>
+                {
+                    var button = MenuAPI.CreateREPOButton("Loading...", null, parent, new Vector2(250f, startY - (challengeButtons.Count * spacing)));
+                    challengeButtons.Add(button);
+                });
+
             }
 
             for (int i = 0; i < challengeButtons.Count; i++)
@@ -68,16 +83,20 @@ namespace REPOStats_Mod.Data
                     string challengeText = challenges[i];
                     if (challengeText == "Click here to join!")
                     {
-                        challengeButtons[i].SetText(challengeText).SetOnClick(() => Application.OpenURL(DiscordInviteUrl));
+
+                        challengeButtons[i].button.onClick.AddListener(() => Application.OpenURL(DiscordInviteUrl));
+                        challengeButtons[i].labelTMP.text = challengeText;
+
+
                     }
                     else
                     {
-                        challengeButtons[i].SetText(challengeText);
+                        challengeButtons[i].labelTMP.text = challengeText;
                     }
                 }
                 else
                 {
-                    challengeButtons[i].SetText(""); // Hide unused buttons
+                    challengeButtons[i].labelTMP.text = "";
                 }
             }
         }
